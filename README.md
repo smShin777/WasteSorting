@@ -43,6 +43,5 @@
 ## 6. Glossary
 
 ## 7. References
-
-출처1: https://www.chosun.com/national/transport-environment/2025/10/22/2X4LAFF7LRCN3MIID6LOUKQ4KI/
-출처2: https://www.newstree.kr/newsView/ntr202303220003
+- 출처1: https://www.chosun.com/national/transport-environment/2025/10/22/2X4LAFF7LRCN3MIID6LOUKQ4KI/
+- 출처2: https://www.newstree.kr/newsView/ntr202303220003
