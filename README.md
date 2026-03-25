@@ -33,18 +33,24 @@
 - **System**:
 
 ## 3. Use case list
+
+1) 로그인
 | Actor | User |
 | Description | 맞춤형 가이드 제공 및 활동 기록 저장을 위해 접속함 |
 
+2) 품목 사진 식별
 | Actor | User |
 | Description | 카메라로 쓰레기를 촬영하면 시스템이 품목을 자동 식별함 |
 
+3) 단계별 가이드 조회
 | Actor | User |
 | Description | 특정 품목에 대한 '비우기-헹구기-분리하기' 단계로 확인함 |
 
+4) 재질별 요령 탐색
 | Actor | User |
 | Description | 플라스틱, 종이, 유리 등 재질별 배출 요령을 확인함 |
 
+5)배출 규칙 업데이트
 | Actor | Admin |
 | Description | 환경부 지침 변경 시 배출 규칙을 수정함 |
 
