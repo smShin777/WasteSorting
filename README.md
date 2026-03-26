@@ -17,7 +17,7 @@
 4. Concept of operation
 5. Problem statement
 6. Glossary
-7. Reference [1, 2]
+7. Reference
 
 ## 1. Business purpose
 - **Project background**: 최근 코로나19 팬데믹 이후 배달 음식 및 택배 이용이 일상화되면서 국내 플라스틱 포장재 폐기물 발생량이 이전에 비해 80%나 급증했습니다. 특히 한국인의 1인단 연간 일회용 플라스틱 소비량은 배달용기 568개, 비닐봉투 533개 등의 매우 높은 수준이며, 이러한 추세가 지속될 경우 플라스틱 폐기물 발생량은 2010년 대비 약 3.6배까지 늘어날 것으로 전망됩니다.
