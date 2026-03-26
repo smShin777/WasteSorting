@@ -8,7 +8,7 @@
 ## [ Revision history]
 | Revision date | Version | Description | Author |
 | :--- | :--- | :--- | :--- |
-|  | 1.0.0 | 초안 작성 |  | [1]
+|  | 1.0.0 | 초안 작성 |  |
 
 ## = Contents =
 1. Business purpose
