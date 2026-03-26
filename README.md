@@ -82,9 +82,49 @@
 | :--- | :--- |
 | Description | 환경부 지침 변경 시 배출 규칙을 수정함 |
 
-
-
 ## 4. Concept of operation
+
+1) 로그인
+
+| Purpse | |
+| Approach | |
+| Dynamics | |
+| Goals | |
+ 
+2) 품목 사진 식별
+
+| Purpse | |
+| Approach | |
+| Dynamics | |
+| Goals | |
+
+3) 단계별 배출 가이드
+
+| Purpse | |
+| Approach | |
+| Dynamics | |
+| Goals | |
+
+4) 체크리스트
+
+| Purpse | |
+| Approach | |
+| Dynamics | |
+| Goals | |
+
+5) 과태료 및 법규 정보 조회
+
+| Purpse | |
+| Approach | |
+| Dynamics | |
+| Goals | |
+
+6) 데이터 업데이트
+
+| Purpse | |
+| Approach | |
+| Dynamics | |
+| Goals | |
 
 ## 5. Problem statement
 
