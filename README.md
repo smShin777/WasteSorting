@@ -31,9 +31,7 @@
 - **Target market**: 환경 보호에 관심이 있거나 분리수거 규칙을 헷갈리는 모든 가구
 
 ## 2. System context diagram
-- **User**: 
-- **Manager**:
-- **System**:
+https://github.com/smShin777/WasteSorting/issues/1
 
 ## 3. Use case list
 
