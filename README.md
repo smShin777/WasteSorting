@@ -144,6 +144,11 @@
 
 ## 6. Glossary
 
+| Term | Description |
+| :--- | :--- |
+| 물질 재활용 | 다 쓴 플라스틱, 비닐, 유리 등을 가공, 처리하여 다시 제품의 원료로 사용하는 순수한 의미의 자원 순환 방식 |
+| 열적 재활용 | 폐기물을 태워 스팀이나 전기를 생산하는 에너지 회수 방식 |
+
 ## 7. References
 - 참고사항1: https://www.chosun.com/national/transport-environment/2025/10/22/2X4LAFF7LRCN3MIID6LOUKQ4KI/
 - 참고사항2: https://www.newstree.kr/newsView/ntr202303220003
