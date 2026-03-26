@@ -86,8 +86,8 @@
 
 1) 로그인
 
-| Purpse | |
 | :--- | :--- |
+| Purpse | |
 | Approach | |
 | Dynamics | |
 | Goals | |
