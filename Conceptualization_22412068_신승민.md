@@ -1,4 +1,7 @@
-# Eco-Checker
+<img width="2000" height="2000" alt="Eco-Step" src="https://github.com/user-attachments/assets/d05e2dd1-a5b7-4248-a58b-f1e3e5150881" />
+
+# Eco-Step
+
 **학번**: 22412068
 
 **이름**: 신승민
