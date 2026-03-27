@@ -1,4 +1,4 @@
-# WasteSorting
+# Eco-Checker
 **학번**: 22412068
 
 **이름**: 신승민
