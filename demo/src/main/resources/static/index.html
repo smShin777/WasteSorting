@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Step UI Prototype</title>
+    <style>
+        :root { --primary-color: #27ae60; --bg-color: #f4f7f6; }
+        body { font-family: 'Arial', sans-serif; background-color: var(--bg-color); margin: 0; padding: 0; }
+
+        .auth-container { display: flex; justify-content: center; align-items: center; height: 100vh; background: var(--primary-color); }
+        .auth-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 350px; text-align: center; }
+        .auth-card h2 { color: var(--primary-color); margin-bottom: 20px; }
+        .auth-card input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        .auth-card button { width: 100%; margin-top: 15px; padding: 12px; background: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .switch-auth { margin-top: 15px; font-size: 0.9rem; color: #666; cursor: pointer; text-decoration: underline; }
+
+        #main-system { display: none; }
+        header { background: var(--primary-color); color: white; padding: 1rem; text-align: center; position: relative; }
+        .logout-btn { position: absolute; right: 20px; top: 1.2rem; background: #c0392b; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        nav { display: flex; justify-content: center; background: #333; }
+        nav a { color: white; padding: 14px 20px; text-decoration: none; cursor: pointer; }
+        nav a:hover { background: #555; }
+
+        .container { max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .screen { display: none; }
+        .screen.active { display: block; }
+
+        .progress-bar { height: 10px; background: #eee; border-radius: 5px; margin: 20px 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--primary-color); width: 0%; transition: width 0.3s; }
+        .guide-box { text-align: center; padding: 30px; border: 2px dashed #ddd; margin-bottom: 20px; border-radius: 10px; }
+
+        /* 관리자 패널 */
+        #admin-panel { display: none; }
+        .admin-form input { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        .admin-form button { padding: 10px 20px; background: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<!-- 회원가입 화면 -->
+<div id="register-screen" class="auth-container">
+    <div class="auth-card">
+        <h2>Eco-Step 가입하기</h2>
+        <p>환경을 위한 첫걸음을 시작하세요</p>
+        <input type="text" id="regId" placeholder="아이디">
+        <input type="password" id="regPw" placeholder="비밀번호">
+        <input type="email" id="regEmail" placeholder="이메일 주소">
+        <button onclick="handleRegister()">회원가입</button>
+        <div class="switch-auth" onclick="showAuth('login-screen')">이미 계정이 있나요? 로그인</div>
+    </div>
+</div>
+
+<!-- 로그인 화면 -->
+<div id="login-screen" class="auth-container" style="display: none;">
+    <div class="auth-card">
+        <h2>로그인</h2>
+        <input type="text" id="loginId" placeholder="아이디">
+        <input type="password" id="loginPw" placeholder="비밀번호">
+        <button onclick="handleLogin()">로그인</button>
+        <div class="switch-auth" onclick="showAuth('register-screen')">아이디가 없으신가요? 회원가입</div>
+    </div>
+</div>
+
+<!-- 일반 사용자 메인 시스템 -->
+<div id="main-system">
+    <header>
+        <h1 id="welcomeHeader">Eco-Step 시스템</h1>
+        <button class="logout-btn" onclick="handleLogout()">로그아웃</button>
+    </header>
+    <nav>
+        <a onclick="showScreen('search-screen')">분리배출 검색</a>
+        <a onclick="showScreen('checklist-screen')">자가 점검</a>
+    </nav>
+    <div class="container">
+        <!-- 검색 화면 -->
+        <div id="search-screen" class="screen active">
+            <h2>무엇을 도와드릴까요?</h2>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="searchInput" placeholder="예: 피자박스">
+                <button onclick="searchItem()" style="background:var(--primary-color); color:white; border:none; padding:10px 20px; border-radius:4px;">검색</button>
+            </div>
+            <div id="searchResult" style="margin-top:20px;"></div>
+        </div>
+        <!-- 가이드 화면 -->
+        <div id="guide-screen" class="screen">
+            <h2 id="guideTitle">배출 가이드</h2>
+            <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+            <div class="guide-box" id="guideText"></div>
+            <div style="display:flex; justify-content: space-between;">
+                <button onclick="prevStep()">이전 단계</button>
+                <button onclick="nextStep()">다음 단계</button>
+            </div>
+        </div>
+        <!-- 체크리스트 화면 -->
+        <div id="checklist-screen" class="screen">
+            <h2>분리배출 4대 원칙 확인</h2>
+            <div style="line-height: 2.5; font-size: 1.1rem;">
+                <input type="checkbox"> 비우기 (내용물을 다 비웠나요?)<br>
+                <input type="checkbox"> 헹구기 (이물질을 씻어냈나요?)<br>
+                <input type="checkbox"> 분리하기 (재질별로 나누었나요?)<br>
+                <input type="checkbox"> 섞지 않기 (일반쓰레기와 섞지 않았나요?)
+            </div>
+            <button onclick="alert('참여해주셔서 감사합니다! 포인트가 지급되었습니다.')" style="margin-top:20px; width:100%;">실천 완료</button>
+        </div>
+    </div>
+</div>
+
+<!-- 관리자 패널 -->
+<div id="admin-panel">
+    <header>
+        <h1 id="adminHeader">Eco-Step 관리자 패널</h1>
+        <button class="logout-btn" onclick="handleLogout()">로그아웃</button>
+    </header>
+    <div class="container">
+        <h2>규칙 / 과태료 업데이트</h2>
+        <div class="admin-form">
+            <label>카테고리</label>
+            <input type="text" id="adminCategory" placeholder="예: 종이류">
+            <label>배출 지침</label>
+            <input type="text" id="adminGuideline" placeholder="예: 내용물을 비우고 배출하세요">
+            <label>과태료 금액 (원)</label>
+            <input type="number" id="adminFine" placeholder="예: 100000">
+            <button onclick="handleAdminUpdate()">업데이트</button>
+        </div>
+        <div id="adminResult" style="margin-top:15px;"></div>
+    </div>
+</div>
+
+<script>
+    // ===== 화면 전환 =====
+    function showAuth(screenId) {
+        document.getElementById('register-screen').style.display = 'none';
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById(screenId).style.display = 'flex';
+    }
+
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+    }
+
+    // ===== 회원가입 =====
+    async function handleRegister() {
+        const id = document.getElementById('regId').value.trim();
+        const pw = document.getElementById('regPw').value.trim();
+        const email = document.getElementById('regEmail').value.trim();
+
+        if (!id || !pw || !email) {
+            alert("모든 필드를 입력해주세요.");
+            return;
+        }
+
+        try {
+            const params = new URLSearchParams({ id: id, password: pw });
+            const response = await fetch('/api/disposal/register?' + params.toString(), {
+                method: 'POST'
+            });
+            const result = await response.text();
+
+            if (result === "SUCCESS") {
+                alert("회원가입이 완료되었습니다!");
+                showAuth('login-screen');
+            } else if (result === "ALREADY EXISTS") {
+                alert("이미 존재하는 아이디입니다.");
+            } else {
+                alert("회원가입에 실패했습니다.");
+            }
+        } catch (error) {
+            alert("서버 연결에 실패했습니다.");
+        }
+    }
+
+    // ===== 로그인 =====
+    async function handleLogin() {
+        const id = document.getElementById('loginId').value.trim();
+        const pw = document.getElementById('loginPw').value.trim();
+
+        if (!id || !pw) {
+            alert("아이디와 비밀번호를 입력해주세요.");
+            return;
+        }
+
+        try {
+            const params = new URLSearchParams({ id: id, password: pw });
+            const response = await fetch('/api/disposal/login?' + params.toString(), {
+                method: 'POST'
+            });
+            const result = await response.text();
+
+            if (result === "USER") {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-system').style.display = 'block';
+                document.getElementById('welcomeHeader').innerText = `${id}님의 Eco-Step`;
+            } else if (result === "ADMIN") {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                document.getElementById('adminHeader').innerText = `${id}님 (관리자)`;
+            } else {
+                alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+            }
+        } catch (error) {
+            alert("서버 연결에 실패했습니다.");
+        }
+    }
+
+    // ===== 로그아웃 =====
+    function handleLogout() {
+        if (confirm("로그아웃 하시겠습니까?")) {
+            document.getElementById('main-system').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'none';
+            showAuth('login-screen');
+        }
+    }
+
+    // ===== 검색 =====
+    async function searchItem() {
+        const keyword = document.getElementById('searchInput').value.trim();
+        const res = document.getElementById('searchResult');
+
+        if (!keyword) {
+            alert("검색어를 입력해주세요.");
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/disposal/search?keyword=' + encodeURIComponent(keyword));
+            const result = await response.json();
+
+            if (result.status === "SUCCESS") {
+                res.innerHTML = `
+                    <div style="background:#eafaf1; border:1px solid var(--primary-color); padding:15px; border-radius:5px;">
+                        <strong>[${result.itemName}]</strong> - ${result.category}<br><br>
+                        📋 <strong>배출 지침:</strong> ${result.guideline}<br><br>
+                        💰 <strong>과태료:</strong> ${result.fineAmount.toLocaleString()}원
+                    </div>`;
+            } else {
+                res.innerHTML = `<p style="color:red;">❌ '${keyword}'에 대한 검색 결과가 없습니다.</p>`;
+            }
+        } catch (error) {
+            alert("서버 연결에 실패했습니다.");
+        }
+    }
+
+    // ===== 관리자 업데이트 =====
+    async function handleAdminUpdate() {
+        const category = document.getElementById('adminCategory').value.trim();
+        const guideline = document.getElementById('adminGuideline').value.trim();
+        const fineAmount = document.getElementById('adminFine').value.trim();
+
+        if (!category || !guideline || !fineAmount) {
+            alert("모든 필드를 입력해주세요.");
+            return;
+        }
+
+        try {
+            const params = new URLSearchParams({ category, guideline, fineAmount });
+            const response = await fetch('/api/admin/update?' + params.toString(), {
+                method: 'POST'
+            });
+            const result = await response.text();
+
+            const adminResult = document.getElementById('adminResult');
+            if (result === "SUCCESS") {
+                adminResult.innerHTML = `<p style="color:green;">✅ 업데이트가 완료되었습니다!</p>`;
+            } else {
+                adminResult.innerHTML = `<p style="color:red;">❌ 업데이트에 실패했습니다.</p>`;
+            }
+        } catch (error) {
+            alert("서버 연결에 실패했습니다.");
+        }
+    }
+
+    // ===== 가이드 로직 =====
+    let currentStep = 1;
+    const steps = [
+        { t: "1단계: 비우기", d: "안에 남은 내용물을 모두 비워주세요." },
+        { t: "2단계: 헹구기", d: "물로 깨끗하게 헹궈주세요." },
+        { t: "3단계: 분리하기", d: "스티커, 라벨 등을 떼어내서 분리하세요." },
+        { t: "4단계: 섞지 않기", d: "지정된 분리배출함에 넣어주세요." }
+    ];
+
+    function startGuide(name) {
+        document.getElementById('guideTitle').innerText = name + " 배출 단계";
+        currentStep = 1;
+        updateGuide();
+        showScreen('guide-screen');
+    }
+
+    function updateGuide() {
+        document.getElementById('guideText').innerHTML =
+            `<h3>${steps[currentStep - 1].t}</h3><p>${steps[currentStep - 1].d}</p>`;
+        document.getElementById('progressFill').style.width = (currentStep * 25) + "%";
+    }
+
+    function nextStep() {
+        if (currentStep < 4) { currentStep++; updateGuide(); }
+        else { alert("수고하셨습니다! 마지막 체크를 진행합니다."); showScreen('checklist-screen'); }
+    }
+
+    function prevStep() {
+        if (currentStep > 1) { currentStep--; updateGuide(); }
+    }
+</script>
+</body>
+</html>
