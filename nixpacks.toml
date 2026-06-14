@@ -6,7 +6,7 @@ nixPkgs = ["jdk17"]
 [
 phases.build
 ]
-cmds = ["./gradlew bootJar"]
+cmds = ["./gradlew bootJar --no-daemon"]
 
 [
 start
