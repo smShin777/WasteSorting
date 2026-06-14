@@ -3,10 +3,7 @@ WORKDIR /app
 COPY demo/src ./src
 COPY demo/build.gradle .
 COPY demo/settings.gradle .
-COPY demo/gradlew .
-COPY demo/gradle ./gradle
-RUN chmod +x gradlew
-RUN ./gradlew bootJar --no-daemon -x test
+RUN gradle bootJar --no-daemon -x test
 
 FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
