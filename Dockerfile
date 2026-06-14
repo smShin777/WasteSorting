@@ -1,7 +1,12 @@
 FROM gradle:8.5-jdk17 AS build
 WORKDIR /app
-COPY demo/.
-RUN gradle bootJar --no-dameon -x test
+COPY demo/src ./src
+COPY demo/build.gradle .
+COPY demo/settings.gradle .
+COPY demo/gradlew .
+COPY demo/gradle ./gardle
+RUN chmod +x gralew
+RUN ./gradle bootJar --no-dameon -x test
 
 FROM openjdk:17-jre-slim
 WORKDIR /app
