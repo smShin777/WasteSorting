@@ -1,15 +1,16 @@
-FROM gradle:8.5-jdk17 AS build
+FROM eclipse-temurin:17-jdk-jammy AS build
 WORKDIR /app
 COPY demo/src ./src
 COPY demo/build.gradle .
 COPY demo/settings.gradle .
 COPY demo/gradlew .
-COPY demo/gradle ./gardle
-RUN chmod +x gralew
-RUN ./gradle bootJar --no-dameon -x test
+COPY demo/gradle ./gradle
+COPY demo/.gitattributes .
+RUN chmod +x gradlew
+RUN ./gradlew bootJar --no-daemon -x test
 
 FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
-COPY --from=build /app/bulid/libs/*.jar app.jar
+COPY --from=build /app/build/libs/demo-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
