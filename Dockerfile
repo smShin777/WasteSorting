@@ -5,7 +5,6 @@ COPY demo/build.gradle .
 COPY demo/settings.gradle .
 COPY demo/gradlew .
 COPY demo/gradle ./gradle
-COPY demo/.gitattributes .
 RUN chmod +x gradlew
 RUN ./gradlew bootJar --no-daemon -x test
 
