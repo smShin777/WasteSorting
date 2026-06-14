@@ -1,6 +1,6 @@
 FROM eclipse-temurin:17-jdk-jammy AS build
 WORKDIR /app
-COPY demo .
+COPY demo/ .
 RUN gradle bootJar --no-daemon -x test
 
 FROM eclipse-temurin:17-jre-jammy
