@@ -8,7 +8,7 @@ COPY demo/gradle ./gardle
 RUN chmod +x gralew
 RUN ./gradle bootJar --no-dameon -x test
 
-FROM openjdk:17-jre-slim
+FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 COPY --from=build /app/bulid/libs/*.jar app.jar
 EXPOSE 8080
